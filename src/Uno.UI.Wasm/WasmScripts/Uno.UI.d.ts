@@ -283,7 +283,7 @@ declare namespace Uno.UI {
         /**
             * Set a view as a child of another one.
             *
-            * "Loading" & "Loaded" events will be raised if nescessary.
+            * "Loading" & "Loaded" events will be raised if necessary.
             *
             * @param pParams Pointer to a WindowManagerAddViewParams native structure.
             */

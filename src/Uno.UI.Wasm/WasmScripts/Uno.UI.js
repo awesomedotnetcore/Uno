@@ -616,7 +616,7 @@ var Uno;
              * @param evt
              */
             leftPointerEventFilter(evt) {
-                return evt ? (!evt.button || evt.button == 0) : false;
+                return evt ? evt.eventPhase === 3 && (!evt.button || evt.button === 0) : false;
             }
             /**
              * default event filter to be used with registerEventOnView to
@@ -624,7 +624,7 @@ var Uno;
              * @param evt
              */
             defaultEventFilter(evt) {
-                return evt ? evt.eventPhase == 2 : false;
+                return evt ? evt.eventPhase === 3 : false;
             }
             /**
              * Gets the event filter function. See UIElement.HtmlEventFilter
@@ -715,7 +715,7 @@ var Uno;
             /**
                 * Set a view as a child of another one.
                 *
-                * "Loading" & "Loaded" events will be raised if nescessary.
+                * "Loading" & "Loaded" events will be raised if necessary.
                 *
                 * @param pParams Pointer to a WindowManagerAddViewParams native structure.
                 */

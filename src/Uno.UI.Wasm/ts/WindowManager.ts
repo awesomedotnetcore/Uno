@@ -570,7 +570,7 @@
 		 * @param evt
 		 */
 		private leftPointerEventFilter(evt: any): boolean {
-			return evt ? (!evt.button || evt.button == 0) : false;
+			return evt ? evt.eventPhase === 3 && (!evt.button || evt.button === 0) : false;
 		}
 
 		/**
@@ -579,7 +579,7 @@
 		 * @param evt
 		 */
 		private defaultEventFilter(evt: any): boolean {
-			return evt ? evt.eventPhase == 2 : false;
+			return evt ? evt.eventPhase === 3 : false;
 		}
 
 		/**
@@ -694,7 +694,7 @@
 		/**
 			* Set a view as a child of another one.
 			*
-			* "Loading" & "Loaded" events will be raised if nescessary.
+			* "Loading" & "Loaded" events will be raised if necessary.
 			*
 			* @param pParams Pointer to a WindowManagerAddViewParams native structure.
 			*/
