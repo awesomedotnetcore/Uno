@@ -570,7 +570,7 @@
 		 * @param evt
 		 */
 		private leftPointerEventFilter(evt: any): boolean {
-			return evt ? evt.eventPhase === 3 && (!evt.button || evt.button === 0) : false;
+			return evt ? evt.eventPhase === 2 || evt.eventPhase === 3 && (!evt.button || evt.button === 0) : false;
 		}
 
 		/**
@@ -579,7 +579,7 @@
 		 * @param evt
 		 */
 		private defaultEventFilter(evt: any): boolean {
-			return evt ? evt.eventPhase === 3 : false;
+			return evt ? evt.eventPhase === 2 || evt.eventPhase === 3 : false;
 		}
 
 		/**
@@ -743,7 +743,7 @@
 		/**
 			* Remove a child from a parent element.
 			*
-			* "Unloading" & "Unloaded" events will be raised if nescessary.
+			* "Unloading" & "Unloaded" events will be raised if necessary.
 			*/
 		public removeView(parentId: number, childId: number): string {
 			this.removeViewInternal(parentId, childId);
