@@ -659,6 +659,15 @@ var Uno;
                 return (evt instanceof KeyboardEvent) ? evt.key : "0";
             }
             /**
+             * tapped (mouse clicked / double clicked) event extractor to be used with registerEventOnView
+             * @param evt
+             */
+            tappedEventExtractor(evt) {
+                return evt
+                    ? `0;${evt.clientX};${evt.clientY};${(evt.ctrlKey ? "1" : "0")};${(evt.shiftKey ? "1" : "0")};${evt.button};mouse`
+                    : "";
+            }
+            /**
              * Gets the event extractor function. See UIElement.HtmlEventExtractor
              * @param eventExtractorName an event extractor name.
              */
@@ -669,6 +678,8 @@ var Uno;
                             return this.pointerEventExtractor;
                         case "KeyboardEventExtractor":
                             return this.keyboardEventExtractor;
+                        case "TappedEventExtractor":
+                            return this.tappedEventExtractor;
                     }
                     throw `Event filter ${eventExtractorName} is not supported`;
                 }
@@ -752,7 +763,7 @@ var Uno;
             /**
                 * Remove a child from a parent element.
                 *
-                * "Unloading" & "Unloaded" events will be raised if nescessary.
+                * "Unloading" & "Unloaded" events will be raised if necessary.
                 */
             removeView(parentId, childId) {
                 this.removeViewInternal(parentId, childId);

@@ -264,6 +264,11 @@ declare namespace Uno.UI {
          */
         private keyboardEventExtractor(evt);
         /**
+         * tapped (mouse clicked / double clicked) event extractor to be used with registerEventOnView
+         * @param evt
+         */
+        private tappedEventExtractor(evt);
+        /**
          * Gets the event extractor function. See UIElement.HtmlEventExtractor
          * @param eventExtractorName an event extractor name.
          */
@@ -292,7 +297,7 @@ declare namespace Uno.UI {
         /**
             * Remove a child from a parent element.
             *
-            * "Unloading" & "Unloaded" events will be raised if nescessary.
+            * "Unloading" & "Unloaded" events will be raised if necessary.
             */
         removeView(parentId: number, childId: number): string;
         /**
