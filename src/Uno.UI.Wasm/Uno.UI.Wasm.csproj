@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
-  <PropertyGroup>
+	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 	</PropertyGroup>
 
@@ -27,17 +27,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <UpToDateCheckInput Remove="ts\AppManifest.ts" />
-	  <UpToDateCheckInput Remove="ts\Interop\IAppManifest.ts" />
-	  <UpToDateCheckInput Remove="ts\Interop\IUnoDispatch.ts" />
-	  <UpToDateCheckInput Remove="ts\MonoSupport.ts" />
-	</ItemGroup>
-
-	<ItemGroup>
-    <PackageReference Include="Uno.Core">
-      <Version>1.26.0-dev.58</Version>
-      <ExcludeAssets>Runtime</ExcludeAssets>
-    </PackageReference>
+	<PackageReference Include="Uno.Core">
+	  <Version>1.26.0-dev.58</Version>
+	  <ExcludeAssets>Runtime</ExcludeAssets>
+	</PackageReference>
 		<PackageReference Include="Microsoft.TypeScript.Compiler" Version="2.8.3" />
 		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="2.8.3" />
 		<PackageReference Include="Uno.SourceGenerationTasks">
@@ -52,9 +45,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="tsBindings\" />
+		<EmbeddedResource Update="WasmScripts\Uno.UI.js" />
 	</ItemGroup>
-	
+
+	<ItemGroup>
+		<Folder Include="tsBindings\" />
+	</ItemGroup>
+
 	<Import Project="..\Uno.CrossTargetting.props" />
 
 	<PropertyGroup>
