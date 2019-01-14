@@ -16,12 +16,14 @@ namespace Windows.UI.Xaml.Media
 	{
 		internal static Matrix3x2 GetMatrix(double centerX, double centerY, double angleDegree)
 		{
+			var angle = (float) MathEx.ToRadians(angleDegree);
 			var centerPoint = new Vector2((float)centerX, (float)centerY);
-			return Matrix3x2.CreateRotation((float)MathEx.ToRadians(angleDegree), centerPoint);
+
+			return Matrix3x2.CreateRotation(angle, centerPoint);
 		}
 
 		internal override Matrix3x2 ToMatrix(Point absoluteOrigin)
-			=> GetMatrix(CenterX, CenterY, Angle);
+			=> GetMatrix(absoluteOrigin.X + CenterX, absoluteOrigin.Y + CenterY, Angle);
 
 		protected override Rect TransformBoundsCore(Rect rect)
 		{

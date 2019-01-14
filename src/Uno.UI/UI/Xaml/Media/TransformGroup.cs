@@ -23,7 +23,7 @@ namespace Windows.UI.Xaml.Media
 			{
 				foreach (var child in Children)
 				{
-					matrix = child.ToMatrix(absoluteOrigin);
+					matrix *= child.ToMatrix(absoluteOrigin);
 				}
 			}
 

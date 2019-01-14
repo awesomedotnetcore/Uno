@@ -16,11 +16,12 @@ namespace Windows.UI.Xaml.Media
 		{
 			var scales = new Vector2((float)scaleX, (float)scaleY);
 			var centerPoint = new Vector2((float)centerX, (float)centerY);
+
 			return Matrix3x2.CreateScale(scales, centerPoint);
 		}
 
 		internal override Matrix3x2 ToMatrix(Point absoluteOrigin)
-			=> GetMatrix(CenterX, CenterY, ScaleX, ScaleY);
+			=> GetMatrix(absoluteOrigin.X + CenterX, absoluteOrigin.Y + CenterY, ScaleX, ScaleY);
 
 		public double CenterY
 		{

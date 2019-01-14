@@ -38,11 +38,15 @@ namespace Windows.UI.Xaml.Media
 
 		private void NativeCommonApply(Matrix3x2 matrix, _View view)
 		{
+			// On iOS Transform are applied by default on the center on the view
+
+			view.Layer.AnchorPoint = CGPoint.Empty;
 			view.Transform = ToNative(matrix);
 		}
 
 		private void NativeCommonCleanup(_View view)
 		{
+			view.Layer.AnchorPoint = CGPoint.Empty;
 			view.Transform = CGAffineTransform.MakeIdentity();
 		}
 
@@ -63,11 +67,13 @@ namespace Windows.UI.Xaml.Media
 
 		private void NativeCommonApply(Matrix3x2 matrix, _View view)
 		{
+			view.Layer.AnchorPoint = CGPoint.Empty;
 			view.Layer.Transform = ToNative(matrix);
 		}
 
 		private void NativeCommonCleanup(_View view)
 		{
+			view.Layer.AnchorPoint = CGPoint.Empty;
 			view.Layer.Transform = CATransform3D.Identity;
 		}
 #endif

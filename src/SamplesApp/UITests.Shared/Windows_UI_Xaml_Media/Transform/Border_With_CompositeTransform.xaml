@@ -22,36 +22,44 @@
 
 
 						<StackPanel Orientation="Horizontal" Padding="0,150">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="200" />
+									<ColumnDefinition Width="50" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
 
-							<Slider Header="Center X" x:Name="RedCenterX" Minimum="-150" Maximum="150" Value="50" />
-							<TextBlock Text="{Binding ElementName=RedCenterX, Path=Value}" />
+								<Grid.RowDefinitions>
+									<RowDefinition />
+									<RowDefinition />
+									<RowDefinition />
+									<RowDefinition />
+								</Grid.RowDefinitions>
 
-							<Slider Header="Center Y" x:Name="RedCenterY" Minimum="-150" Maximum="150" Value="50" />
-							<TextBlock Text="{Binding ElementName=RedCenterY, Path=Value}" />
+								<TextBlock Grid.Row="0" Grid.Column="0" Text="Origin" />
+								<TextBox Grid.Row="0" Grid.Column="1" Text="0,0" x:Name="RedOrigin" HorizontalAlignment="Stretch" />
 
-							<Slider Header="Angle" x:Name="RedAngle" Minimum="0" Maximum="360" Value="30" />
-							<TextBlock Text="{Binding ElementName=RedAngle, Path=Value}" />
+								<Slider Grid.Row="1" Grid.Column="0" Header="Center X" x:Name="RedCenterX" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+								<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ElementName=RedCenterX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
 
-							<Rectangle Fill="#FF0000" Width="100" Height="100" >
-								<Rectangle.RenderTransform>
-									<RotateTransform
-										CenterX="{Binding ElementName=RedCenterX, Path=Value}"
-										CenterY="{Binding ElementName=RedCenterY, Path=Value}"
-										Angle="{Binding ElementName=RedAngle, Path=Value}"
-										x:Name="RedRotate" >
-										<!--<behaviors:DynamicAnimation.Storyboard>
-											<Storyboard>
-												<DoubleAnimation 
-													Storyboard.TargetProperty="Angle"
-													From="0"
-													To="360"
-													Duration="0:0:10"
-													RepeatBehavior="Forever" />
-											</Storyboard>
-										</behaviors:DynamicAnimation.Storyboard>-->
-									</RotateTransform>
-								</Rectangle.RenderTransform>
-							</Rectangle>
+								<Slider Grid.Row="2" Grid.Column="0" Header="Center Y" x:Name="RedCenterY" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+								<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ElementName=RedCenterY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+								<Slider Grid.Row="3" Grid.Column="0" Header="Angle" x:Name="RedAngle" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+								<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ElementName=RedAngle, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+								<Border Grid.RowSpan="4" Grid.Column="2" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+									<Rectangle Fill="#FF0000" Width="100" Height="100" RenderTransformOrigin="{Binding ElementName=RedOrigin, Path=Text}">
+										<Rectangle.RenderTransform>
+											<RotateTransform
+												CenterX="{Binding ElementName=RedCenterX, Path=Value}"
+												CenterY="{Binding ElementName=RedCenterY, Path=Value}"
+												Angle="{Binding ElementName=RedAngle, Path=Value}" />
+										</Rectangle.RenderTransform>
+									</Rectangle>
+								</Border>
+							</Grid>
+
 
 							<!--<Rectangle Fill="#FF8000" Width="100" Height="100" >
 								<Rectangle.RenderTransform>
@@ -176,7 +184,7 @@
 							</Rectangle>-->
 						</StackPanel>
 
-						<Grid Width="200"
+						<!--<Grid Width="200"
 							Height="200"
 							Background="LemonChiffon">
 							<Border
@@ -241,7 +249,7 @@
 								BorderThickness="1"
 								 VerticalAlignment="Center"
 								 HorizontalAlignment="Center"/>
-						</Grid>
+						</Grid>-->
 					</StackPanel>
 				</ScrollViewer>
 			<!--</DataTemplate>

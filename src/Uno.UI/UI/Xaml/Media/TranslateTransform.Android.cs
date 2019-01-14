@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Windows.Foundation;
 using System.Text;
-using Android.Graphics;
 using Uno.UI;
+using Android.Views;
 
 namespace Windows.UI.Xaml.Media
 {

@@ -70,14 +70,26 @@ namespace Windows.UI.Xaml.Media
 
 		protected override void ApplyTo(UIView view, Point absoluteOrigin)
 		{
-			var pivotX = absoluteOrigin.X + CenterX;
-			var pivotY = absoluteOrigin.Y + CenterY;
+			var abc = true;
 
-			var transform = CGAffineTransform.MakeTranslation((nfloat)pivotX, (nfloat)pivotY);
-			transform = CGAffineTransform.Rotate(transform, (nfloat)MathEx.ToRadians(Angle));
-			transform = CGAffineTransform.Translate(transform, -(nfloat)pivotX, -(nfloat)pivotY);
+			if (abc)
+			{
 
-			view.Transform = transform;
+				var pivotX = absoluteOrigin.X + CenterX;
+				var pivotY = absoluteOrigin.Y + CenterY;
+
+				var transform = CGAffineTransform.MakeTranslation((nfloat) pivotX, (nfloat) pivotY);
+				transform = CGAffineTransform.Rotate(transform, (nfloat) MathEx.ToRadians(Angle));
+				transform = CGAffineTransform.Translate(transform, -(nfloat) pivotX, -(nfloat) pivotY);
+
+				view.Layer.AnchorPoint = CGPoint.Empty;
+				view.Transform = transform;
+
+			}
+			else
+			{
+				base.ApplyTo(view, absoluteOrigin);
+			}
 		}
 	}
 }

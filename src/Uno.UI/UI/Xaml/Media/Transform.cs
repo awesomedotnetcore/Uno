@@ -152,8 +152,8 @@ namespace Windows.UI.Xaml.Media
 
 		private static Point GetAbsoluteOrigin(Point relativeOrigin, Size size)
 		{
-			var x = (relativeOrigin.X - .5) * size.Width;
-			var y = (relativeOrigin.Y - .5) * size.Height;
+			var x = relativeOrigin.X * size.Width;
+			var y = relativeOrigin.Y * size.Height;
 
 			return new Point(x, y);
 		}

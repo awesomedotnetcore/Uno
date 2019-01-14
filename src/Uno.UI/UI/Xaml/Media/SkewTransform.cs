@@ -15,12 +15,15 @@ namespace Windows.UI.Xaml.Media
 	{
 		internal static Matrix3x2 GetMatrix(double centerX, double centerY, double angleXDegree, double angleYDegree)
 		{
+			var angleX = (float)MathEx.ToRadians(angleXDegree);
+			var angleY = (float) MathEx.ToRadians(angleYDegree);
 			var centerPoint = new Vector2((float)centerX, (float)centerY);
-			return Matrix3x2.CreateSkew((float)MathEx.ToRadians(angleXDegree), (float)MathEx.ToRadians(angleYDegree), centerPoint);
+
+			return Matrix3x2.CreateSkew(angleX, angleY, centerPoint);
 		}
 
 		internal override Matrix3x2 ToMatrix(Point absoluteOrigin)
-			=> GetMatrix(CenterX, CenterY, AngleX, AngleY);
+			=> GetMatrix(absoluteOrigin.X + CenterX, absoluteOrigin.Y + CenterY, AngleX, AngleY);
 
 		public double CenterY
 		{

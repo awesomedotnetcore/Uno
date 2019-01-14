@@ -15,10 +15,10 @@ namespace Windows.UI.Xaml.Media
 	/// </summary>
 	public partial class Transform
 	{
-		//internal virtual Android.Graphics.Matrix ToNativeTransform(Android.Graphics.Matrix targetMatrix = null, Size size = new Size(), bool isBrush = false)
-		//{
-		//	throw new NotImplementedException();
-		//}
+		internal virtual Android.Graphics.Matrix ToNative(Android.Graphics.Matrix targetMatrix = null, Size size = new Size(), bool isBrush = false)
+		{
+			throw new NotImplementedException();
+		}
 
 		// Not implemented yet
 		// The transform matrix cannot be applied directly and must
