@@ -728,21 +728,21 @@ namespace <#= mixin.NamespaceName #>
             DependencyProperty.Register("RenderTransform", typeof(Transform), typeof(<#= mixin.ClassName #>), new PropertyMetadata(null, OnRenderTransformChanged));
 
   
-    	private static void OnRenderTransformChanged(object dependencyObject, DependencyPropertyChangedEventArgs args)
+		private static void OnRenderTransformChanged(object dependencyObject, DependencyPropertyChangedEventArgs args)
 		{
-			var newValue = args.NewValue as Transform;
+			var view = ((<#= mixin.ClassName #>)dependencyObject);
+
 			var oldValue = args.OldValue as Transform;
-			if (newValue != null)
-			{
-				var view = ((<#= mixin.ClassName #>)dependencyObject);
-				
-                newValue.View = view;
-				newValue.Origin = view.RenderTransformOrigin;
-			}        
 			if (oldValue != null)
 			{
-                oldValue.View =null;
-			}         
+                oldValue.DetachFromView(view);
+			} 
+
+			var newValue = args.NewValue as Transform;
+			if (newValue != null)
+			{
+                newValue.AttachToView(view, view.RenderTransformOrigin);
+			}   
 		}
 
 		#endregion
@@ -766,10 +766,9 @@ namespace <#= mixin.NamespaceName #>
     	private static void OnRenderTransformOriginChanged(object dependencyObject, DependencyPropertyChangedEventArgs args)
 		{
 			var view = ((<#= mixin.ClassName #>)dependencyObject);
-			if(view.RenderTransform != null)
-			{
-				view.RenderTransform.Origin = (Point)args.NewValue;
-			}
+			var point = (Point)args.NewValue;
+
+			view.RenderTransform?.SetOrigin(view, point);
 		}
 
 		#endregion
@@ -851,7 +850,7 @@ namespace <#= mixin.NamespaceName #>
 			if (newSize != previousSize)
 			{
 				SizeChanged?.Invoke(this, new SizeChangedEventArgs(previousSize, newSize));
-				RenderTransform?.OnViewSizeChanged(previousSize, newSize);
+				RenderTransform?.OnViewSizeChanged(this, newSize);
 			}
 	    }
 

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 using System.Threading;
 using Uno;
+using Uno.Disposables;
 using Uno.Extensions;
 using Uno.Foundation;
 using Uno.Foundation.Interop;
@@ -15,24 +17,99 @@ namespace Windows.UI.Xaml.Media.Animation
 			: base(from, to)
 		{
 			Handle = JSObjectHandle.Create(this, Metadata.Instance);
+
+			_delay = new DispatcherTimer();
+			_delay.Tick += OnFrame;
 		}
 
 		public JSObjectHandle Handle { get; }
 
 
-		protected override void EnableFrameReporting() => WebAssemblyRuntime.InvokeJSWithInterop($"{this}.EnableFrameReporting();");
+		//protected override void EnableFrameReporting() => WebAssemblyRuntime.InvokeJSWithInterop($"{this}.EnableFrameReporting();");
 
-		protected override void DisableFrameReporting() => WebAssemblyRuntime.InvokeJSWithInterop($"{this}.DisableFrameReporting();");
+		//protected override void DisableFrameReporting() => WebAssemblyRuntime.InvokeJSWithInterop($"{this}.DisableFrameReporting();");
 
-		protected override void SetStartFrameDelay(long delayMs) => WebAssemblyRuntime.InvokeJSWithInterop($"{this}.SetStartFrameDelay({delayMs});");
+		//protected override void SetStartFrameDelay(long delayMs) => WebAssemblyRuntime.InvokeJSWithInterop($"{this}.SetStartFrameDelay({delayMs});");
 
-		protected override void SetAnimationFramesInterval() => WebAssemblyRuntime.InvokeJSWithInterop($"{this}.SetAnimationFramesInterval();");
+		//protected override void SetAnimationFramesInterval() => WebAssemblyRuntime.InvokeJSWithInterop($"{this}.SetAnimationFramesInterval();");
+
+		private readonly DispatcherTimer _delay = new DispatcherTimer();
+		private readonly SerialDisposable _subscription = new SerialDisposable();
+		protected override void EnableFrameReporting()
+		{
+			_delay.Stop();
+			_subscription.Disposable = Loop.Instance.Subscribe(OnFrame);
+		}
+
+		protected override void DisableFrameReporting()
+		{
+			_delay.Stop();
+			_subscription.Disposable = Disposable.Empty;
+		}
+
+		protected override void SetStartFrameDelay(long delayMs)
+		{
+			_subscription.Disposable = Disposable.Empty;
+
+			_delay.Interval = TimeSpan.FromMilliseconds(delayMs);
+			_delay.Start();
+		}
+
+		protected override void SetAnimationFramesInterval()
+		{
+			_delay.Stop();
+
+			_subscription.Disposable = Loop.Instance.Subscribe(OnFrame);
+		}
 
 		private void OnFrame() => OnFrame(null, null);
 
+		private class Loop : IJSObject
+		{
+			public static Loop Instance { get; } = new Loop();
+
+			private ImmutableList<Action> _subscriptions = ImmutableList<Action>.Empty;
+			public JSObjectHandle Handle { get; }
+
+			private Loop()
+			{
+				Handle = JSObjectHandle.Create(this, Metadata.Instance);
+			}
+
+			public IDisposable Subscribe(Action onFrame)
+			{
+				var capture = _subscriptions;
+				_subscriptions = capture.Add(onFrame);
+				if (capture.IsEmpty)
+				{
+					WebAssemblyRuntime.InvokeJSWithInterop($"{this}.EnableFrameReporting();");
+				}
+
+				return Disposable.Create(UnSubscribe);
+
+				void UnSubscribe()
+				{
+					_subscriptions = _subscriptions.Remove(onFrame);
+					if (_subscriptions.IsEmpty)
+					{
+						WebAssemblyRuntime.InvokeJSWithInterop($"{this}.DisableFrameReporting();");
+					}
+				}
+			}
+
+			public void OnFrame()
+			{
+				var handlers = _subscriptions;
+				foreach (var handler in handlers)
+				{
+					handler();
+				}
+			}
+		}
+
 		private class Metadata : IJSObjectMetadata
 		{
-			public static Metadata Instance {get;} = new Metadata();
+			public static Metadata Instance { get; } = new Metadata();
 			private Metadata() { }
 
 			private static long _handles = 0L;
@@ -68,7 +145,7 @@ namespace Windows.UI.Xaml.Media.Animation
 				switch (method)
 				{
 					case "OnFrame":
-						((RenderingLoopFloatAnimator)instance).OnFrame();
+						((Loop)instance).OnFrame();
 						break;
 
 					default:

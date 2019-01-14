@@ -62,7 +62,7 @@ namespace Windows.UI.Xaml.Media.Animation
 		{
 			CheckDisposed();
 
-			ConfigureStartInterval(elapsed: 0);
+			ConfigureInterval(elapsed: 0);
 
 			IsRunning = true;
 			_elapsed.Restart();
@@ -86,7 +86,7 @@ namespace Windows.UI.Xaml.Media.Animation
 		{
 			CheckDisposed();
 
-			ConfigureStartInterval(_elapsed.ElapsedMilliseconds);
+			ConfigureInterval(_elapsed.ElapsedMilliseconds);
 
 			IsRunning = true;
 			_elapsed.Start();
@@ -140,7 +140,7 @@ namespace Windows.UI.Xaml.Media.Animation
 				// We got an invalid tick ... handle it gracefully
 
 				// Reconfigure the start interval to tick only at the end of the start delay
-				ConfigureStartInterval(elapsed);
+				ConfigureInterval(elapsed);
 
 				CurrentPlayTime = 0;
 				_currentValue = _from;
@@ -174,7 +174,7 @@ namespace Windows.UI.Xaml.Media.Animation
 			}
 		}
 
-		private void ConfigureStartInterval(long elapsed)
+		private void ConfigureInterval(long elapsed)
 		{
 			if (StartDelay > 0)
 			{

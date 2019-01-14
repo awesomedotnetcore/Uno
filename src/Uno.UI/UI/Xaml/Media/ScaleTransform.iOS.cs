@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using UIKit;
 using CoreGraphics;
-using System.Drawing;
 
 namespace Windows.UI.Xaml.Media
 {
@@ -16,57 +16,73 @@ namespace Windows.UI.Xaml.Media
 	/// </summary>
 	public partial class ScaleTransform
 	{
-		partial void SetCenterY(DependencyPropertyChangedEventArgs args)
-		{
-			// Don't update the internal value if the value is being animated.
-			// The value is being animated by the platform itself.
-			if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
-			{
-				Update();
-			}
-		}
+		//partial void SetCenterY(DependencyPropertyChangedEventArgs args)
+		//{
+		//	// Don't update the internal value if the value is being animated.
+		//	// The value is being animated by the platform itself.
+		//	if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
+		//	{
+		//		Update();
+		//	}
+		//}
 
-		partial void SetCenterX(DependencyPropertyChangedEventArgs args)
-		{
-			// Don't update the internal value if the value is being animated.
-			// The value is being animated by the platform itself.
-			if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
-			{
-				Update();
-			}
-		}
+		//partial void SetCenterX(DependencyPropertyChangedEventArgs args)
+		//{
+		//	// Don't update the internal value if the value is being animated.
+		//	// The value is being animated by the platform itself.
+		//	if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
+		//	{
+		//		Update();
+		//	}
+		//}
 
-		partial void SetScaleX(DependencyPropertyChangedEventArgs args)
-		{
-			// Don't update the internal value if the value is being animated.
-			// The value is being animated by the platform itself.
-			if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
-			{
-				Update();
-			}
-		}
+		//partial void SetScaleX(DependencyPropertyChangedEventArgs args)
+		//{
+		//	// Don't update the internal value if the value is being animated.
+		//	// The value is being animated by the platform itself.
+		//	if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
+		//	{
+		//		Update();
+		//	}
+		//}
 
-		partial void SetScaleY(DependencyPropertyChangedEventArgs args)
-		{
-			// Don't update the internal value if the value is being animated.
-			// The value is being animated by the platform itself.
-			if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
-			{
-				Update();
-			}
-		}
+		//partial void SetScaleY(DependencyPropertyChangedEventArgs args)
+		//{
+		//	// Don't update the internal value if the value is being animated.
+		//	// The value is being animated by the platform itself.
+		//	if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
+		//	{
+		//		Update();
+		//	}
+		//}
 
-		protected override void OnAttachedToView()
-		{
-			base.OnAttachedToView();
+		//protected override void Update()
+		//{
+		//	if (View != null)
+		//	{
+		//		DoScale();
+		//	}
 
-			SetNeedsUpdate();
-		}
+		//	base.Update();
+		//}
 
-		internal override CGAffineTransform ToNativeTransform(CGSize size, bool withCenter = true)
+		//private void DoScale()
+		//{
+		//	this.View.Transform = ToNativeTransform(GetViewSize(View));
+		//}
+
+
+		//protected override void OnAttachedToView()
+		//{
+		//	base.OnAttachedToView();
+
+		//	SetNeedsUpdate();
+		//}
+
+		protected override void ApplyTo(UIView view, Point absoluteOrigin)
 		{
-			var pivotX = withCenter ? CenterX : 0;
-			var pivotY = withCenter ? CenterY : 0;
+			var pivotX = absoluteOrigin.X + CenterX;
+			var pivotY = absoluteOrigin.Y + CenterY;
 
 			var transform = CGAffineTransform.MakeIdentity();
 
@@ -79,7 +95,7 @@ namespace Windows.UI.Xaml.Media
 			//Unapply centering
 			transform = CGAffineTransform.Translate(transform, -(nfloat)pivotX, -(nfloat)pivotY);
 
-			return transform;
+			view.Transform = transform;
 		}
 	}
 }

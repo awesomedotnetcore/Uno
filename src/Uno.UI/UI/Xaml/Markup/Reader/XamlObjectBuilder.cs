@@ -219,14 +219,21 @@ namespace Windows.UI.Xaml.Markup.Reader
 				}
 				else
 				{
-					// throw new InvalidOperationException($"The Property {member.Member.Name} does not exist on {member.Member.DeclaringType}");
+					if (member.Member.Name != "base")
+					{
+						throw new InvalidOperationException($"The Property {member.Member.Name} does not exist on {member.Member.DeclaringType}");
+					}
 				}
 			}
 			else if (TypeResolver.IsAttachedProperty(member))
 			{
 				var dependencyProperty = TypeResolver.FindDependencyProperty(member);
 
-				if (dependencyProperty != null)
+				if (dependencyProperty == null)
+				{
+					throw new InvalidOperationException($"{member.Member.Name} is not a property of {member.Member.DeclaringType?.Name}");
+				}
+				else
 				{
 					if (member.Objects.None())
 					{

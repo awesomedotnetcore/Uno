@@ -15,60 +15,71 @@ namespace Windows.UI.Xaml.Media
 	/// </summary>
 	partial class Transform
 	{
-		internal virtual Matrix3x2 ToNativeTransform(Size size)
-		{
-			throw new NotImplementedException(nameof(ToNativeTransform) + " not implemented for " + this.GetType().ToString());
-		}
-
-		internal static double ToRadians(double angle) => MathEx.ToRadians(angle);
-
-		protected void SetMatrix(Matrix3x2 m)
+		private void NativeCommonApply(Matrix3x2 m, UIElement view)
 		{
 			var matrix = $"matrix({m.M11.ToStringInvariant()},{m.M12.ToStringInvariant()},{m.M21.ToStringInvariant()},{m.M22.ToStringInvariant()},{m.M31.ToStringInvariant()},{m.M32.ToStringInvariant()})";
-			View?.SetStyle("transform", matrix);
+			view?.SetStyle("transform", matrix);
 		}
 
-		protected void Update()
-		{
-			SetMatrix(ToNativeTransform(GetViewSize(View)));
-		}
-
-		partial void OnDetachedFromViewPartial(UIElement view)
+		private void NativeCommonCleanup(UIElement view)
 		{
 			view.ResetStyle("transform");
-
-			if (view is FrameworkElement fe)
-			{
-				fe.SizeChanged -= Fe_SizeChanged;
-			}
 		}
 
-		partial void OnAttachedToViewPartial(UIElement view)
-		{
-			View?.SetStyle("transform-origin", "left top");
-			if (view is FrameworkElement fe)
-			{
-				fe.SizeChanged += Fe_SizeChanged;
-			}
-		}
+		//internal virtual Matrix3x2 ToNativeTransform(Size size)
+		//{
+		//	throw new NotImplementedException(nameof(ToNativeTransform) + " not implemented for " + this.GetType().ToString());
+		//}
 
-		private void Fe_SizeChanged(object sender, SizeChangedEventArgs args)
-		{
-			Update();
-		}
+		//internal static double ToRadians(double angle) => MathEx.ToRadians(angle);
 
-		/// <summary>
-		/// Get size of the view before any transform is applied.
-		/// </summary>
-		protected static Size GetViewSize(UIElement view)
-		{
-			if (view is FrameworkElement fe)
-			{
-				return fe.RenderSize;
-			}
+		//protected void SetMatrix(Matrix3x2 m)
+		//{
+		//	var matrix = $"matrix({m.M11.ToStringInvariant()},{m.M12.ToStringInvariant()},{m.M21.ToStringInvariant()},{m.M22.ToStringInvariant()},{m.M31.ToStringInvariant()},{m.M32.ToStringInvariant()})";
+		//	View?.SetStyle("transform", matrix);
+		//}
 
-			return Size.Empty;
-		}
+		//protected void Update()
+		//{
+		//	SetMatrix(ToNativeTransform(GetViewSize(View)));
+		//}
+
+		//partial void OnDetachedFromViewPartial(UIElement view)
+		//{
+		//	view.ResetStyle("transform");
+
+		//	if (view is FrameworkElement fe)
+		//	{
+		//		fe.SizeChanged -= Fe_SizeChanged;
+		//	}
+		//}
+
+		//partial void OnAttachedToViewPartial(UIElement view)
+		//{
+		//	View?.SetStyle("transform-origin", "left top");
+		//	if (view is FrameworkElement fe)
+		//	{
+		//		fe.SizeChanged += Fe_SizeChanged;
+		//	}
+		//}
+
+		//private void Fe_SizeChanged(object sender, SizeChangedEventArgs args)
+		//{
+		//	Update();
+		//}
+
+		///// <summary>
+		///// Get size of the view before any transform is applied.
+		///// </summary>
+		//protected static Size GetViewSize(UIElement view)
+		//{
+		//	if (view is FrameworkElement fe)
+		//	{
+		//		return fe.RenderSize;
+		//	}
+
+		//	return Size.Empty;
+		//}
 	}
 }
 

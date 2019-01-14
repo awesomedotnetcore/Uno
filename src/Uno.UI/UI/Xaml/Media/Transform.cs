@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 using Windows.Foundation;
 #if XAMARIN_ANDROID
@@ -23,57 +24,122 @@ namespace Windows.UI.Xaml.Media
 	/// </summary>
 	public abstract partial class Transform : GeneralTransform
 	{
-		internal virtual void OnViewSizeChanged(Size oldSize, Size newSize)
+		protected static PropertyChangedCallback NotifyChangedCallback { get; } = (snd, args) =>
 		{
-			Update();
-		}
+			// Don't update the internal value if the value is being animated.
+			// The value is being animated by the platform itself.
 
-#if !__WASM__
-		protected virtual void Update()
-		{
-			UpdatePartial();
-		}
-#endif
-
-		partial void UpdatePartial();
-
-		View _view;
-
-		/// <summary>
-		/// Transforms are attached to a View
-		/// </summary>
-		internal View View
-		{
-			get => _view;
-			set
+			if (snd is Transform transform
+				&& transform._currentView != null
+				&& !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
 			{
-				var view = _view;
-				_view = value;
-				if (value != null)
-				{
-					OnAttachedToView();
-					OnAttachedToViewPartial(_view);
-				}
-				else
-				{
-					OnDetachedFromViewPartial(view);
-				}
+				transform.NotifyChanged();
+			}
+		};
+
+		internal event EventHandler Changed;
+
+		private View _currentView;
+		private Size _currentViewSize;
+		private Point _currentViewOrigin;
+
+		protected void NotifyChanged()
+		{
+			// If the View is null, it usually means that this tranform is part of a group,
+			// so we have to notify the change so the group will be able to aggregate all the changes at once.
+			if (_currentView == null)
+			{
+				Changed?.Invoke(this, EventArgs.Empty);
+			}
+			else
+			{
+				ApplyTo(_currentView, GetAbsoluteOrigin());
 			}
 		}
 
-		protected virtual void OnAttachedToView()
+		protected virtual void ApplyTo(View view, Point absoluteOrigin)
 		{
+			// virtual: Gives the opportunity to the tranform to apply it in a more specific / smarter way than the default matrix fallback
 
+			NativeCommonApply(ToMatrix(absoluteOrigin), view);
 		}
 
-		partial void OnAttachedToViewPartial(View view);
-
-		partial void OnDetachedFromViewPartial(View view);
+		protected virtual void Cleanup(View view)
+		{
+			NativeCommonCleanup(view);
+		}
 
 		/// <summary>
-		/// The <see cref="FrameworkElement.RenderTransformOrigin"/> of the targeted view.
+		/// Converts the transform to a standard transform matrix
 		/// </summary>
-		internal virtual Foundation.Point Origin { get; set; }
+		/// <param name="absoluteOrigin">The obsolute origin of the transform, in virtuals pixels.</param>
+		/// <returns></returns>
+		internal abstract Matrix3x2 ToMatrix(Point absoluteOrigin);
+
+		// Currently we support only one view par transform.
+		// But we can declare a Trasnform as a  static ressource and use it on multiple views.
+		internal View View => _currentView;
+
+		internal void AttachToView(View newView, Point origin)
+		{
+			var oldView = _currentView;
+			if (oldView == newView)
+			{
+				return;
+			}
+
+			if (oldView != null)
+			{
+				Cleanup(oldView);
+			}
+
+			_currentView = newView;
+
+			if (newView != null)
+			{
+				ApplyTo(newView, GetAbsoluteOrigin());
+			}
+		}
+
+		internal void DetachFromView(View view)
+		{
+			AttachToView(null, default(Point));
+		}
+
+		// Fast path to notifty that the size of the control changed without registering to the event
+		// On iOS it's also usefull to avoid useless work (capture the Transform before setting the Frame and restore it after)
+		internal void OnViewSizeChanged(View view, Size newSize)
+		{
+			_currentViewSize = newSize;
+
+			// This is invoked only if the View is set, so we don't have to 'NotifyChanged',
+			// instead we can directly request to update the view using the 'ApplyTo'.
+			ApplyTo(_currentView, GetAbsoluteOrigin());
+		}
+
+		internal void SetOrigin(View view, Point origin)
+		{
+			_currentViewOrigin = origin;
+
+			// This is invoked only if the View is set, so we don't have to 'NotifyChanged',
+			// instead we can directly request to update the view using the 'ApplyTo'.
+			ApplyTo(_currentView, GetAbsoluteOrigin());
+		}
+
+		/// <summary>
+		/// Gets the <see cref="Origin"/> in absolute logical pixels.
+		/// </summary>
+		/// <param name="size">The size of the targetted view.</param>
+		private Point GetAbsoluteOrigin()
+			=> GetAbsoluteOrigin(_currentViewOrigin, _currentViewSize);
+
+		private static Point GetAbsoluteOrigin(Point relativeOrigin, Size size)
+		{
+			var x = (relativeOrigin.X - .5) * size.Width;
+			var y = (relativeOrigin.Y - .5) * size.Height;
+
+			return new Point(x, y);
+		}
 	}
 }
 

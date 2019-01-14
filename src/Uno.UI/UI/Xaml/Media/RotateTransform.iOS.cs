@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UIKit;
 using CoreGraphics;
-using System.Drawing;
 using Windows.Foundation;
+using Uno.UI;
 
 namespace Windows.UI.Xaml.Media
 {
@@ -18,52 +18,66 @@ namespace Windows.UI.Xaml.Media
 	public partial class RotateTransform
 	{
 
-		partial void SetCenterY(DependencyPropertyChangedEventArgs args)
+		//partial void SetCenterY(DependencyPropertyChangedEventArgs args)
+		//{
+		//	// Don't update the internal value if the value is being animated.
+		//	// The value is being animated by the platform itself.
+		//	if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
+		//	{
+		//		Update();
+		//	}
+		//}
+
+		//partial void SetCenterX(DependencyPropertyChangedEventArgs args)
+		//{
+		//	// Don't update the internal value if the value is being animated.
+		//	// The value is being animated by the platform itself.
+		//	if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
+		//	{
+		//		Update();
+		//	}
+		//}
+
+		//partial void SetAngle(DependencyPropertyChangedEventArgs args)
+		//{
+		//	// Don't update the internal value if the value is being animated.
+		//	// The value is being animated by the platform itself.
+		//	if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
+		//	{
+		//		Update();
+		//	}
+		//}
+
+
+		//protected override void Update()
+		//{
+		//	if (View != null)
+		//	{
+		//		View.Transform = ToNativeTransform(GetViewSize(View));
+		//	}
+
+		//	base.Update();
+		//}
+
+
+
+		//protected override void OnAttachedToView()
+		//{
+		//	base.OnAttachedToView();
+
+		//	SetNeedsUpdate();
+		//}
+
+		protected override void ApplyTo(UIView view, Point absoluteOrigin)
 		{
-			// Don't update the internal value if the value is being animated.
-			// The value is being animated by the platform itself.
-			if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
-			{
-				Update();
-			}
-		}
+			var pivotX = absoluteOrigin.X + CenterX;
+			var pivotY = absoluteOrigin.Y + CenterY;
 
-		partial void SetCenterX(DependencyPropertyChangedEventArgs args)
-		{
-			// Don't update the internal value if the value is being animated.
-			// The value is being animated by the platform itself.
-			if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
-			{
-				Update();
-			}
-		}
-
-		partial void SetAngle(DependencyPropertyChangedEventArgs args)
-		{
-			// Don't update the internal value if the value is being animated.
-			// The value is being animated by the platform itself.
-			if (View != null && !(args.NewPrecedence == DependencyPropertyValuePrecedences.Animations && args.BypassesPropagation))
-			{
-				Update();
-			}
-		}
-
-		protected override void OnAttachedToView()
-		{
-			base.OnAttachedToView();
-
-			SetNeedsUpdate();
-		}
-
-		internal override CGAffineTransform ToNativeTransform(CGSize size, bool withCenter = true)
-		{
-			var pivotX = withCenter ? CenterX : 0;
-			var pivotY = withCenter ? CenterY : 0;
-
-			CGAffineTransform transform = CGAffineTransform.MakeTranslation((nfloat)(pivotX), (nfloat)(pivotY));
-			transform = CGAffineTransform.Rotate(transform, (nfloat)ToRadians(Angle));
+			var transform = CGAffineTransform.MakeTranslation((nfloat)pivotX, (nfloat)pivotY);
+			transform = CGAffineTransform.Rotate(transform, (nfloat)MathEx.ToRadians(Angle));
 			transform = CGAffineTransform.Translate(transform, -(nfloat)pivotX, -(nfloat)pivotY);
-			return transform;
+
+			view.Transform = transform;
 		}
 	}
 }

@@ -1,0 +1,23 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:behaviors="using:Uno.UI.Demo.Behaviors">
+
+	<Rectangle Width="100" Height="100" Name="myRectangle">
+		<Rectangle.RenderTransform>
+			<RotateTransform>
+				<behaviors:DynamicAnimation.Storyboard>
+					<Storyboard>
+						<DoubleAnimation
+							Storyboard.TargetProperty="Angle"
+							From="0"
+							To="360"
+							Duration="0:0:10"
+							EnableDependentAnimation="True"
+							RepeatBehavior="Forever" />
+					</Storyboard>
+				</behaviors:DynamicAnimation.Storyboard>
+			</RotateTransform>
+		</Rectangle.RenderTransform>
+	</Rectangle>
+</UserControl>

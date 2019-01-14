@@ -276,7 +276,7 @@ namespace Windows.UI.Xaml.Media.Animation
 				|| animatedItem.PropertyName.Equals(RotateTransformAngle)
 				|| animatedItem.PropertyName.Equals(RotateTransformAngleWithNamespace))
 			{
-				return CreateCoreAnimation(view, "transform.rotation", value => new NSNumber(Transform.ToRadians(value)));
+				return CreateCoreAnimation(view, "transform.rotation", value => new NSNumber(MathEx.ToRadians(value)));
 			}
 			else
 			{
@@ -357,7 +357,7 @@ namespace Windows.UI.Xaml.Media.Animation
 				case CompositeTransformRotation:
 				case CompositeTransformRotationWithNamespace:
 				case "Rotation":
-					return CreateCoreAnimation(view, "transform.rotation", value => new NSNumber(Transform.ToRadians(value)));
+					return CreateCoreAnimation(view, "transform.rotation", value => new NSNumber(MathEx.ToRadians(value)));
 				case CompositeTransformScaleX:
 				case CompositeTransformScaleXWithNamespace:
 				case "ScaleX":

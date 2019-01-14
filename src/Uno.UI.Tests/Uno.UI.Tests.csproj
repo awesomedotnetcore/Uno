@@ -87,6 +87,7 @@
     <None Remove="XamlReaderTests\When_Binding_TargetNull.xamltest" />
     <None Remove="XamlReaderTests\When_Binding_TwoWay.xamltest" />
     <None Remove="XamlReaderTests\When_Binding_TwoWay_UpdateSourceTrigger.xamltest" />
+    <None Remove="XamlReaderTests\When_CustomAttachedProperty.xamltest" />
     <None Remove="XamlReaderTests\When_ElementName.xamltest" />
     <None Remove="XamlReaderTests\When_GridRowDefinitions.xamltest" />
     <None Remove="XamlReaderTests\When_MultipleBindings.xamltest" />

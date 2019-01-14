@@ -449,6 +449,17 @@ namespace <#= mixin.NamespaceName #>
 				{
 					SizeChanged?.Invoke(this, new SizeChangedEventArgs(previousSize, _actualSize));
 
+					if (RenderTransform != null)
+					{
+						// This will set the updated Transform
+						RenderTransform.OnViewSizeChanged(this, _actualSize);
+					}
+					else if (oldTransform.HasValue)
+					{
+						// We grudgingly support setting the native transform directly without going through RenderTransform.
+						Transform = oldTransform.Value;
+					}
+
 #if <#= mixin.IsFrameworkElement #>
 					if (Superview != null && !(Superview is DependencyObject))
 					{
@@ -459,8 +470,7 @@ namespace <#= mixin.NamespaceName #>
 					}
 #endif
 				}
-
-				if (oldTransform != null) 
+				else if (oldTransform.HasValue)
 				{
 					// We grudgingly support setting the native transform directly without going through RenderTransform.
 					Transform = oldTransform.Value;

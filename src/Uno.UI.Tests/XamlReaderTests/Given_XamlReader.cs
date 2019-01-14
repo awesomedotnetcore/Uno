@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Shapes;
+using Uno.UI.Demo.Behaviors;
 using FluentAssertions;
 using Windows.UI.Xaml.Controls.Primitives;
 using Microsoft.Extensions.Logging;
@@ -691,6 +693,22 @@ namespace Uno.UI.Tests.XamlReaderTests
 
 			Assert.AreEqual(typeof(TypeConvertersControl), root.TypeProperty);
 			Assert.AreEqual(new Uri("https://platform.uno/"), root.UriProperty);
+		}
+
+		[TestMethod]
+		public void When_CustomAttachedProperty()
+		{
+			var s = GetContent(nameof(When_CustomAttachedProperty));
+			var r = Windows.UI.Xaml.Markup.XamlReader.Load(s) as UserControl;
+
+			var rectangle = r.Content as Rectangle;
+			Assert.IsNotNull(rectangle);
+
+			var transform = rectangle.RenderTransform as RotateTransform;
+			Assert.IsNotNull(transform);
+
+			var storyboard = DynamicAnimation.GetStoryboard(transform);
+			Assert.IsNotNull(storyboard);
 		}
 
 		private string GetContent(string testName)

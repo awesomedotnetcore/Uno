@@ -216,29 +216,25 @@ namespace Windows.UI.Xaml
 
 		static partial void OnRenderTransformChanged(object dependencyObject, DependencyPropertyChangedEventArgs args)
 		{
-			if (args.NewValue is Transform newTransform)
-			{
-				var view = (UIElement)dependencyObject;
+			var view = ((UIElement)dependencyObject);
 
-				newTransform.View = view;
-				newTransform.Origin = view.RenderTransformOrigin;
+			if (args.OldValue is Transform oldValue)
+			{
+				oldValue.DetachFromView(view);
 			}
 
-			if (args.OldValue is Transform oldTransform)
+			if (args.NewValue is Transform newValue)
 			{
-				oldTransform.View = null;
+				newValue.AttachToView(view, view.RenderTransformOrigin);
 			}
 		}
 
 		static partial void OnRenderTransformOriginChanged(object dependencyObject, DependencyPropertyChangedEventArgs args)
 		{
-			if (
-				dependencyObject is UIElement view
-				&& view.RenderTransform != null
-			)
-			{
-				view.RenderTransform.Origin = (Point)args.NewValue;
-			}
+			var view = (UIElement)dependencyObject;
+			var point = (Point)args.NewValue;
+
+			view.RenderTransform?.SetOrigin(view, point);
 		}
 
 		/// <summary>

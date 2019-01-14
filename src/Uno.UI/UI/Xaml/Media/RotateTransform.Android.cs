@@ -12,63 +12,69 @@ namespace Windows.UI.Xaml.Media
 	/// </summary>
 	public partial class RotateTransform
 	{
-		partial void OnOriginChanged(Foundation.Point origin)
+		//partial void OnOriginChanged(Foundation.Point origin)
+		//{
+		//	Update();
+		//}
+
+		//partial void SetCenterX(DependencyPropertyChangedEventArgs args)
+		//{
+		//	Update();
+		//}
+
+		//partial void SetCenterY(DependencyPropertyChangedEventArgs args)
+		//{
+		//	Update();
+		//}
+
+		//partial void SetAngle(DependencyPropertyChangedEventArgs args)
+		//{
+		//	Update();
+		//}
+
+		//protected override void Update()
+		//{
+		//	base.Update();
+
+		//	if (View != null)
+		//	{
+		//		View.PivotX = (float)(Origin.X * View.MeasuredWidth) + ViewHelper.LogicalToPhysicalPixels(CenterX);
+		//		View.PivotY = (float)(Origin.Y * View.MeasuredHeight) + ViewHelper.LogicalToPhysicalPixels(CenterY);
+		//		View.Rotation = (float)Angle;
+		//	}
+		//}
+
+		///// <summary>
+		///// Apply Transform whem attached
+		///// </summary>
+		//protected override void OnAttachedToView()
+		//{
+		//	base.OnAttachedToView();
+
+		//	SetCenterX(this.CreateInitialChangedEventArgs(CenterXProperty));
+		//	SetCenterY(this.CreateInitialChangedEventArgs(CenterYProperty));
+		//	SetAngle(this.CreateInitialChangedEventArgs(AngleProperty));
+		//}
+
+		//internal override Android.Graphics.Matrix ToNativeTransform(Android.Graphics.Matrix targetMatrix = null, Size size = default(Size), bool isBrush = false)
+		//{
+		//	if (targetMatrix == null)
+		//	{
+		//		targetMatrix = new Android.Graphics.Matrix();
+		//	}
+
+		//	var pivot = this.GetPivot(size, isBrush);
+
+		//	targetMatrix.PostRotate((float)Angle, (float)pivot.X, (float)pivot.Y);
+
+		//	return targetMatrix;
+		//}
+
+		protected override void ApplyTo(View view, Point absoluteOrigin)
 		{
-			Update();
-		}
-
-		partial void SetCenterX(DependencyPropertyChangedEventArgs args)
-		{
-			Update();
-		}
-
-		partial void SetCenterY(DependencyPropertyChangedEventArgs args)
-		{
-			Update();
-		}
-
-		partial void SetAngle(DependencyPropertyChangedEventArgs args)
-		{
-			Update();
-		}
-
-		protected override void Update()
-		{
-			base.Update();
-
-			if (View != null)
-			{
-				View.PivotX = (float) (Origin.X * View.Width) + ViewHelper.LogicalToPhysicalPixels(CenterX);
-				View.PivotY = (float) (Origin.Y * View.Height) + ViewHelper.LogicalToPhysicalPixels(CenterY);
-				View.Rotation = (float) Angle;
-			}
-		}
-
-		/// <summary>
-		/// Apply Transform when attached
-		/// </summary>
-		protected override void OnAttachedToView()
-		{
-			base.OnAttachedToView();
-
-			SetCenterX(this.CreateInitialChangedEventArgs(CenterXProperty));
-			SetCenterY(this.CreateInitialChangedEventArgs(CenterYProperty));
-			SetAngle(this.CreateInitialChangedEventArgs(AngleProperty));
-		}
-
-		internal override Android.Graphics.Matrix ToNativeTransform(Android.Graphics.Matrix targetMatrix = null,
-			Size size = default(Size), bool isBrush = false)
-		{
-			if (targetMatrix == null)
-			{
-				targetMatrix = new Android.Graphics.Matrix();
-			}
-
-			var pivot = this.GetPivot(size, isBrush);
-
-			targetMatrix.PostRotate((float) Angle, (float) pivot.X, (float) pivot.Y);
-
-			return targetMatrix;
+			view.PivotX = (float)ViewHelper.LogicalToPhysicalPixels(absoluteOrigin.X + CenterX);
+			view.PivotY = (float)ViewHelper.LogicalToPhysicalPixels(absoluteOrigin.Y + CenterY);
+			view.Rotation = (float)Angle;
 		}
 	}
 }

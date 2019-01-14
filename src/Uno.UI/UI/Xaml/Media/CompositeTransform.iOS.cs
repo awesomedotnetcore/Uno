@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Windows.Foundation;
 using CoreGraphics;
 using Uno.Extensions;
 using Microsoft.Extensions.Logging;
+using UIKit;
 using Uno.Logging;
+using Uno.UI;
 
 namespace Windows.UI.Xaml.Media
 {
@@ -13,14 +16,14 @@ namespace Windows.UI.Xaml.Media
 	/// </summary>
 	public partial class CompositeTransform
 	{
-		/// <summary>
-		/// Set the view of the inner transform
-		/// </summary>
-		protected override void OnAttachedToView()
-		{
-			base.OnAttachedToView();
-			_innerTransform.View = View;
-		}
+		///// <summary>
+		///// Set the view of the inner transform
+		///// </summary>
+		//protected override void OnAttachedToView()
+		//{
+		//	base.OnAttachedToView();
+		//	_innerTransform.View = View;
+		//}
 
 		/// <summary>
 		/// Creates native transform which applies multiple transformations in this order:
@@ -31,10 +34,10 @@ namespace Windows.UI.Xaml.Media
 		/// https://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.media.compositetransform.aspx
 		/// </summary>
 		/// <returns></returns>
-		internal override CGAffineTransform ToNativeTransform(CGSize size, bool withCenter = true)
+		protected override void ApplyTo(UIView view, Point absoluteOrigin)
 		{
-			var pivotX = withCenter ? CenterX : 0;
-			var pivotY = withCenter ? CenterY : 0;
+			var pivotX = absoluteOrigin.X + CenterX;
+			var pivotY = absoluteOrigin.Y + CenterY;
 
 			var transform = CGAffineTransform.MakeIdentity();
 
@@ -50,14 +53,14 @@ namespace Windows.UI.Xaml.Media
 				this.Log().Warn("Skew is not enabled for CompositeTransform.");
 			}
 
-			transform = CGAffineTransform.Rotate(transform, (nfloat)ToRadians(Rotation));
+			transform = CGAffineTransform.Rotate(transform, (nfloat)MathEx.ToRadians(Rotation));
 
 			transform = CGAffineTransform.Translate(transform, (float)TranslateX, (float)TranslateY);
 
 			//Unapply centering
 			transform = CGAffineTransform.Translate(transform, (float)(-pivotX), (float)(-pivotY));
 
-			return transform;
+			view.Transform = transform;
 		}
 	}
 }

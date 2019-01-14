@@ -149,16 +149,16 @@ namespace Windows.UI.Xaml.Markup.Reader
 		{
 			var propertyOwner = FindType(member.Member.DeclaringType);
 
+			var property = default(DependencyProperty);
 			if (propertyOwner != null)
 			{
 				var propertyName = member.Member.Name;
+				property = FindDependencyProperty(propertyOwner, propertyName);
+			}
 
-				return FindDependencyProperty(propertyOwner, propertyName);
-			}
-			else
-			{
-				return null;
-			}
+			Console.Error.WriteLine($"Property: {member.Member.Name} / Declaring: {member.Member.DeclaringType.Name} / Resolved type: {propertyOwner?.Name ?? "** NOT FOUND **"} / Resolved property: {property?.Name ?? "** NOT FOUND **"}");
+
+			return property;
 		}
 
 		public DependencyProperty FindDependencyProperty(Type propertyOwner, string propertyName)
@@ -171,10 +171,14 @@ namespace Windows.UI.Xaml.Markup.Reader
 				.Where(p => p.Name == propertyName + "Property")
 				.FirstOrDefault();
 
-			return (
+			var property = (
 				propertyDependencyPropertyQuery?.GetValue(null)
 				?? fieldDependencyPropertyQuery?.GetValue(null)
 			) as DependencyProperty;
+
+			Console.Error.WriteLine($"Property: {propertyName} / Declaring: {propertyOwner.Name} /  Resolved property: {property?.Name ?? "** NOT FOUND **"}");
+
+			return property;
 		}
 
 		private static IEnumerable<PropertyInfo> GetAllProperties(Type type)

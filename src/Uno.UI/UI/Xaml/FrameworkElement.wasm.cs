@@ -157,6 +157,7 @@ namespace Windows.UI.Xaml
 		internal void RaiseSizeChanged(SizeChangedEventArgs args)
 		{
 			SizeChanged?.Invoke(this, args);
+			RenderTransform?.OnViewSizeChanged(this, args.NewSize);
 		}
 
 		static partial void OnGenericPropertyUpdatedPartial(object dependencyObject, DependencyPropertyChangedEventArgs args);
@@ -311,6 +312,8 @@ namespace Windows.UI.Xaml
 			set { this.SetValue(MarginProperty, value); }
 		}
 		#endregion
+
+		public Point RenderTransformOrigin { get; set; }
 
 		#region HorizontalAlignment Dependency Property
 
