@@ -844,21 +844,19 @@ namespace <#= mixin.NamespaceName #>
             DependencyProperty.Register("RenderTransform", typeof(Transform), typeof(<#= mixin.ClassName #>), new PropertyMetadata(null, OnRenderTransformChanged));
 
   
-    	private static void OnRenderTransformChanged(object dependencyObject, DependencyPropertyChangedEventArgs args)
+		private static void OnRenderTransformChanged(object dependencyObject, DependencyPropertyChangedEventArgs args)
 		{
-			var newValue = args.NewValue as Transform;
-			var oldValue = args.OldValue as Transform;
-			if (newValue != null)
+			var view = ((<#= mixin.ClassName #>)dependencyObject);
+
+			if (args.OldValue is Transform oldValue)
 			{
-				var view = ((<#= mixin.ClassName #>)dependencyObject);
-				
-                newValue.View = view;
-				newValue.Origin = view.RenderTransformOrigin;
-			}        
-			if (oldValue != null)
-			{
-                oldValue.View =null;
+				oldValue.DetachFromView(view);
 			} 
+
+			if (args.NewValue is Transform newValue)
+			{
+				newValue.AttachToView(view, view.RenderTransformOrigin);
+			}
 		}
 
 		#endregion
@@ -879,15 +877,12 @@ namespace <#= mixin.NamespaceName #>
             DependencyProperty.Register("RenderTransformOrigin", typeof(Point), typeof(<#= mixin.ClassName #>), new PropertyMetadata(default(Point), OnRenderTransformOriginChanged));
 
   
-    	private static void OnRenderTransformOriginChanged(object dependencyObject, DependencyPropertyChangedEventArgs args)
+		private static void OnRenderTransformOriginChanged(object dependencyObject, DependencyPropertyChangedEventArgs args)
 		{
 			var view = ((<#= mixin.ClassName #>)dependencyObject);
 			var point = (Point)args.NewValue;
 
-			if(view.RenderTransform != null)
-			{
-				view.RenderTransform.Origin = point;
-			}
+			view.RenderTransform?.SetOrigin(view, point);
 		}
 
 		#endregion

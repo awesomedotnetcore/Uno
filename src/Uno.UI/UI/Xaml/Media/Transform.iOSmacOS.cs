@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CoreGraphics;
 using System.Drawing;
+using System.Numerics;
 using Uno.UI;
 using CoreAnimation;
 
@@ -21,6 +22,7 @@ namespace Windows.UI.Xaml.Media
 	/// </summary>
 	public abstract partial class Transform
 	{
+#if __IOS__
 		internal static CGAffineTransform ToNative(Matrix3x2 matrix)
 			=> new CGAffineTransform(
 				(nfloat)matrix.M11,
@@ -34,15 +36,47 @@ namespace Windows.UI.Xaml.Media
 		internal CGAffineTransform ToNative(CGSize size)
 			=> ToNative(ToMatrix(GetAbsoluteOrigin(new Foundation.Point(0, 0), size.ToFoundationSize())));
 
-		private void NativeCommonApply(Matrix3x2 matrix, UIView view)
+		private void NativeCommonApply(Matrix3x2 matrix, _View view)
 		{
 			view.Transform = ToNative(matrix);
 		}
 
-		private void NativeCommonCleanup(UIView view)
+		private void NativeCommonCleanup(_View view)
 		{
 			view.Transform = CGAffineTransform.MakeIdentity();
 		}
+
+#elif __MACOS__
+		internal static CATransform3D ToNative(Matrix3x2 matrix)
+			=> new CATransform3D
+			{ 
+				m11 = (nfloat)matrix.M11,
+				m12 = (nfloat)matrix.M12,
+				m21 = (nfloat)matrix.M21,
+				m22 = (nfloat)matrix.M22,
+				m31 = (nfloat)matrix.M31, // + (nfloat)absOrigin.X,
+				m32 = (nfloat)matrix.M32 // + (nfloat)absOrigin.Y
+			};
+
+		internal CATransform3D ToNative(CGSize size)
+			=> ToNative(ToMatrix(GetAbsoluteOrigin(new Foundation.Point(0, 0), size.ToFoundationSize())));
+
+		private void NativeCommonApply(Matrix3x2 matrix, _View view)
+		{
+			view.Layer.Transform = ToNative(matrix);
+		}
+
+		private void NativeCommonCleanup(_View view)
+		{
+			view.Layer.Transform = CATransform3D.Identity;
+		}
+#endif
+
+
+
+
+
+
 
 		//		private bool _needsUpdate;
 

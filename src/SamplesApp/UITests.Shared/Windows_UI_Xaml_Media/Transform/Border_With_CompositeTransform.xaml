@@ -14,11 +14,168 @@
 	d:DesignHeight="2000"
 	d:DesignWidth="400">
 
-	<controls:SampleControl SampleDescription="Description for sample of Border_With_CompositeTransform">
+	<!--<controls:SampleControl SampleDescription="Description for sample of Border_With_CompositeTransform">
 		<controls:SampleControl.SampleContent>
-			<DataTemplate>
+			<DataTemplate>-->
 				<ScrollViewer>
 					<StackPanel>
+
+
+						<StackPanel Orientation="Horizontal" Padding="0,150">
+
+							<Slider Header="Center X" x:Name="RedCenterX" Minimum="-150" Maximum="150" Value="50" />
+							<TextBlock Text="{Binding ElementName=RedCenterX, Path=Value}" />
+
+							<Slider Header="Center Y" x:Name="RedCenterY" Minimum="-150" Maximum="150" Value="50" />
+							<TextBlock Text="{Binding ElementName=RedCenterY, Path=Value}" />
+
+							<Slider Header="Angle" x:Name="RedAngle" Minimum="0" Maximum="360" Value="30" />
+							<TextBlock Text="{Binding ElementName=RedAngle, Path=Value}" />
+
+							<Rectangle Fill="#FF0000" Width="100" Height="100" >
+								<Rectangle.RenderTransform>
+									<RotateTransform
+										CenterX="{Binding ElementName=RedCenterX, Path=Value}"
+										CenterY="{Binding ElementName=RedCenterY, Path=Value}"
+										Angle="{Binding ElementName=RedAngle, Path=Value}"
+										x:Name="RedRotate" >
+										<!--<behaviors:DynamicAnimation.Storyboard>
+											<Storyboard>
+												<DoubleAnimation 
+													Storyboard.TargetProperty="Angle"
+													From="0"
+													To="360"
+													Duration="0:0:10"
+													RepeatBehavior="Forever" />
+											</Storyboard>
+										</behaviors:DynamicAnimation.Storyboard>-->
+									</RotateTransform>
+								</Rectangle.RenderTransform>
+							</Rectangle>
+
+							<!--<Rectangle Fill="#FF8000" Width="100" Height="100" >
+								<Rectangle.RenderTransform>
+									<TranslateTransform x:Name="OrangeTranslate">
+										--><!--<behaviors:DynamicAnimation.Storyboard>
+											<Storyboard>
+												<DoubleAnimation 
+													Storyboard.TargetProperty="Y"
+													From="-150"
+													To="0"
+													Duration="0:0:2"
+													RepeatBehavior="Forever">
+
+												</DoubleAnimation>
+											</Storyboard>
+										</behaviors:DynamicAnimation.Storyboard>--><!--
+									</TranslateTransform>
+								</Rectangle.RenderTransform>
+							</Rectangle>
+
+							<Rectangle Fill="#FFFF00" Width="100" Height="100">
+								<Rectangle.RenderTransform>
+									<SkewTransform x:Name="YellowSkew">
+										--><!--<behaviors:DynamicAnimation.Storyboard>
+											<Storyboard>
+												<DoubleAnimation 
+													Storyboard.TargetProperty="AngleX"
+													From="0"
+													To="180"
+													Duration="0:0:5"
+													RepeatBehavior="Forever">
+													<DoubleAnimation.EasingFunction>
+														<PowerEase Power="5" />
+													</DoubleAnimation.EasingFunction>
+												</DoubleAnimation>
+											</Storyboard>
+										</behaviors:DynamicAnimation.Storyboard>--><!--
+									</SkewTransform>
+								</Rectangle.RenderTransform>
+							</Rectangle>
+
+							<Rectangle Fill="#008000" Width="100" Height="100" >
+								<Rectangle.RenderTransform>
+									<ScaleTransform CenterX="50" CenterY="50" x:Name="GreenScale">
+										--><!--<behaviors:DynamicAnimation.Storyboard>
+											<Storyboard>
+												<DoubleAnimation 
+													Storyboard.TargetProperty="ScaleX"
+													From=".8"
+													To="1.2"
+													Duration="0:0:1"
+													AutoReverse="True"
+													RepeatBehavior="Forever" />
+												<DoubleAnimation 
+													Storyboard.TargetProperty="ScaleY"
+													From=".8"
+													To="1.2"
+													Duration="0:0:1"
+													AutoReverse="True"
+													RepeatBehavior="Forever" />
+											</Storyboard>
+										</behaviors:DynamicAnimation.Storyboard>--><!--
+									</ScaleTransform>
+								</Rectangle.RenderTransform>
+							</Rectangle>
+
+							<Rectangle Fill="#0000FF" Width="100" Height="100" >
+								<Rectangle.RenderTransform>
+									<CompositeTransform CenterX="50" CenterY="50" x:Name="BlueComposite">
+										--><!--<behaviors:DynamicAnimation.Storyboard>
+											<Storyboard>
+												<DoubleAnimation 
+													Storyboard.TargetProperty="Rotation"
+													From="0"
+													To="360"
+													Duration="0:0:1"
+													RepeatBehavior="Forever" />
+												<DoubleAnimation 
+													Storyboard.TargetProperty="TranslateX"
+													From="0"
+													To="50"
+													Duration="0:0:1"
+													AutoReverse="True"
+													RepeatBehavior="Forever">
+																			--><!--<DoubleAnimation.EasingFunction>
+														<PowerEase Power="5" EasingMode="EaseOut" />
+													</DoubleAnimation.EasingFunction>--><!--
+												</DoubleAnimation>
+												<DoubleAnimation 
+													Storyboard.TargetProperty="TranslateY"
+													From="0"
+													To="50"
+													Duration="0:0:1"
+													AutoReverse="True"
+													RepeatBehavior="Forever">
+																			--><!--<DoubleAnimation.EasingFunction>
+														<PowerEase Power="5" EasingMode="EaseOut" />
+													</DoubleAnimation.EasingFunction>--><!--
+												</DoubleAnimation>
+											</Storyboard>
+										</behaviors:DynamicAnimation.Storyboard>--><!--
+									</CompositeTransform>
+								</Rectangle.RenderTransform>
+							</Rectangle>
+
+							<Rectangle Fill="#A000C0" Width="100" Height="100" x:Name="PurpleOpacity">
+								--><!--<behaviors:DynamicAnimation.Storyboard>
+									<Storyboard>
+										<DoubleAnimation 
+											Storyboard.TargetProperty="Opacity"
+											From="1"
+											To="0"
+											Duration="0:0:4"
+											AutoReverse="True"
+											RepeatBehavior="Forever">
+											<DoubleAnimation.EasingFunction>
+												<ExponentialEase Exponent="4" EasingMode="EaseIn" />
+											</DoubleAnimation.EasingFunction>
+										</DoubleAnimation>
+									</Storyboard>
+								</behaviors:DynamicAnimation.Storyboard>--><!--
+							</Rectangle>-->
+						</StackPanel>
+
 						<Grid Width="200"
 							Height="200"
 							Background="LemonChiffon">
@@ -87,7 +244,7 @@
 						</Grid>
 					</StackPanel>
 				</ScrollViewer>
-			</DataTemplate>
+			<!--</DataTemplate>
 		</controls:SampleControl.SampleContent>
-	</controls:SampleControl>
+	</controls:SampleControl>-->
 </UserControl>

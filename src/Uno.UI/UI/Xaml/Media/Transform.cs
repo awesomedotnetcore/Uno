@@ -45,7 +45,7 @@ namespace Windows.UI.Xaml.Media
 
 		protected void NotifyChanged()
 		{
-			// If the View is null, it usually means that this tranform is part of a group,
+			// If the View is null, it usually means that this transform is part of a group,
 			// so we have to notify the change so the group will be able to aggregate all the changes at once.
 			if (_currentView == null)
 			{
@@ -57,27 +57,44 @@ namespace Windows.UI.Xaml.Media
 			}
 		}
 
+		/// <summary>
+		/// Applies this transform to the given view
+		/// </summary>
+		/// <remarks>
+		/// Note to implementers:
+		/// By default this will convert this transform to a Matrix and will apply the matrix to the view,
+		/// but this behavior can be overridden by sub classes to use a faster solution.
+		/// In that case implementers should not invoke the base.ApplyTo.
+		/// </remarks>
+		/// <param name="view">The view on which this transform have to be applied</param>
+		/// <param name="absoluteOrigin">The origin to use for this transform (in absolute virtual pixels)</param>
 		protected virtual void ApplyTo(View view, Point absoluteOrigin)
 		{
-			// virtual: Gives the opportunity to the tranform to apply it in a more specific / smarter way than the default matrix fallback
+			// virtual: Gives the opportunity to the transform to apply it in a more specific / smarter way than the default matrix fallback
 
 			NativeCommonApply(ToMatrix(absoluteOrigin), view);
 		}
 
+		/// <summary>
+		/// This removes this current transform from the given view
+		/// </summary>
+		/// <param name="view">The view from which this transform should be removed</param>
 		protected virtual void Cleanup(View view)
 		{
+			// virtual: Gives the opportunity to the transform to apply it in a more specific / smarter way than the default matrix fallback
+
 			NativeCommonCleanup(view);
 		}
 
 		/// <summary>
 		/// Converts the transform to a standard transform matrix
 		/// </summary>
-		/// <param name="absoluteOrigin">The obsolute origin of the transform, in virtuals pixels.</param>
+		/// <param name="absoluteOrigin">The absolute origin of the transform, in virtual pixels.</param>
 		/// <returns></returns>
 		internal abstract Matrix3x2 ToMatrix(Point absoluteOrigin);
 
 		// Currently we support only one view par transform.
-		// But we can declare a Trasnform as a  static ressource and use it on multiple views.
+		// But we can declare a Transform as a static resource and use it on multiple views.
 		internal View View => _currentView;
 
 		internal void AttachToView(View newView, Point origin)
@@ -93,6 +110,7 @@ namespace Windows.UI.Xaml.Media
 				Cleanup(oldView);
 			}
 
+			_currentViewOrigin = origin;
 			_currentView = newView;
 
 			if (newView != null)
@@ -127,9 +145,8 @@ namespace Windows.UI.Xaml.Media
 		}
 
 		/// <summary>
-		/// Gets the <see cref="Origin"/> in absolute logical pixels.
+		/// Gets the origin of the transform in absolute logical pixels.
 		/// </summary>
-		/// <param name="size">The size of the targetted view.</param>
 		private Point GetAbsoluteOrigin()
 			=> GetAbsoluteOrigin(_currentViewOrigin, _currentViewSize);
 

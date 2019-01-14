@@ -732,17 +732,15 @@ namespace <#= mixin.NamespaceName #>
 		{
 			var view = ((<#= mixin.ClassName #>)dependencyObject);
 
-			var oldValue = args.OldValue as Transform;
-			if (oldValue != null)
+			if (args.OldValue is Transform oldValue)
 			{
-                oldValue.DetachFromView(view);
+				oldValue.DetachFromView(view);
 			} 
 
-			var newValue = args.NewValue as Transform;
-			if (newValue != null)
+			if (args.NewValue is Transform newValue)
 			{
-                newValue.AttachToView(view, view.RenderTransformOrigin);
-			}   
+				newValue.AttachToView(view, view.RenderTransformOrigin);
+			}
 		}
 
 		#endregion

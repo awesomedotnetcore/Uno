@@ -471,6 +471,26 @@ namespace AppKit
 			return null;
 		}
 
+		/// <summary>
+		/// Moves the UIView's Postion and AnchorPoint to reflect the CenterX and CenterY values
+		/// </summary>
+		internal static void SetViewCenter(this _View thisView, nfloat x, nfloat y)
+		{
+			//https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreAnimation_guide/CoreAnimationBasics/CoreAnimationBasics.html#//apple_ref/doc/uid/TP40004514-CH2-SW13
+
+			//Anchor point is in the middle of the view - this code moves it around
+			var centerX = x / thisView.Bounds.Size.Width;
+			var centerY = y / thisView.Bounds.Size.Height;
+
+			thisView.Layer.Position = new CGPoint(x + thisView.Frame.X, y + thisView.Frame.Y);
+
+			// relative to width and height, if it is not Zero.
+			thisView.Layer.AnchorPoint = new CGPoint(
+				nfloat.IsNaN(centerX) ? 0 : centerX,
+				nfloat.IsNaN(centerY) ? 0 : centerY
+			);
+		}
+
 		public static nfloat GetNativeAlpha(this _View view)
 		{
 #if __MACOS__

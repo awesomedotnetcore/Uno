@@ -70,19 +70,16 @@ namespace Windows.UI.Xaml
 
 		static partial void OnRenderTransformChanged(object dependencyObject, DependencyPropertyChangedEventArgs args)
 		{
-			var newValue = args.NewValue as Transform;
-			var oldValue = args.OldValue as Transform;
+			var view = ((UIElement)dependencyObject);
 
-			if (newValue != null)
+			if (args.OldValue is Transform oldValue)
 			{
-				var view = (UIElement)dependencyObject;
-
-				newValue.View = view;
-				newValue.Origin = view.RenderTransformOrigin;
+				oldValue.DetachFromView(view);
 			}
-			if (oldValue != null)
+
+			if (args.NewValue is Transform newValue)
 			{
-				oldValue.View = null;
+				newValue.AttachToView(view, view.RenderTransformOrigin);
 			}
 		}
 
@@ -91,10 +88,7 @@ namespace Windows.UI.Xaml
 			var view = (UIElement)dependencyObject;
 			var point = (Point)args.NewValue;
 
-			if (view.RenderTransform != null)
-			{
-				view.RenderTransform.Origin = point;
-			}
+			view.RenderTransform?.SetOrigin(view, point);
 		}
 
 		partial void OnOpacityChanged(DependencyPropertyChangedEventArgs args)

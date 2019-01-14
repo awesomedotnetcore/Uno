@@ -313,8 +313,6 @@ namespace Windows.UI.Xaml
 		}
 		#endregion
 
-		public Point RenderTransformOrigin { get; set; }
-
 		#region HorizontalAlignment Dependency Property
 
 		public static readonly DependencyProperty HorizontalAlignmentProperty =

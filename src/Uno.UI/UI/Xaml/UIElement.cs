@@ -301,7 +301,6 @@ namespace Windows.UI.Xaml
 		public static readonly DependencyProperty RenderTransformOriginProperty =
 			DependencyProperty.Register("RenderTransformOrigin", typeof(Point), typeof(UIElement), new PropertyMetadata(default(Point), (s, e) => OnRenderTransformOriginChanged(s, e)));
 
-
 		static partial void OnRenderTransformOriginChanged(object dependencyObject, DependencyPropertyChangedEventArgs args);
 
 #endregion

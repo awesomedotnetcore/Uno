@@ -92,7 +92,6 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>VisualStatesMixins.tt</DependentUpon>
 		</Compile>
-		<Compile Include="UI\Xaml\Media\Transform.net.cs" />
 	</ItemGroup>
 
 	<Choose>
@@ -324,12 +323,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="UI\Xaml\Media\Transform.net.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <UpToDateCheckInput Remove="DataBinding\BindingPropertyHelper.MemberBinder.cs" />
-	  <UpToDateCheckInput Remove="UI\Xaml\Media\Transform.net.cs" />
 	</ItemGroup>
 
 	<Target Name="BuildManualDependencies" BeforeTargets="_UnoSourceGenerator" Condition="!Exists($(T4Bin))">

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using Windows.Foundation;
 using System.Text;
+using Android.Views;
 using Uno.Extensions;
 using Uno.Logging;
 
@@ -24,7 +25,7 @@ namespace Windows.UI.Xaml.Media
 		// first be decomposed to fit in the Android API.
 		// See https://math.stackexchange.com/questions/13150/extracting-rotation-scale-values-from-2d-transformation-matrix
 
-		private void NativeCommonApply(Matrix3x2 m, View view)
+		private void NativeCommonApply(Matrix3x2 matrix, View view)
 		{
 			this.Log().Error("MatrixTransform is not implemented");
 		}
