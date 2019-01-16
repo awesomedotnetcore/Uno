@@ -18,50 +18,305 @@
 		<controls:SampleControl.SampleContent>
 			<DataTemplate>-->
 				<ScrollViewer>
-					<StackPanel>
+		<StackPanel HorizontalAlignment="Stretch">
 
 
-						<StackPanel Orientation="Horizontal" Padding="0,150">
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="200" />
-									<ColumnDefinition Width="50" />
-									<ColumnDefinition Width="*" />
-								</Grid.ColumnDefinitions>
+						<StackPanel HorizontalAlignment="Stretch" Padding="0,150">
+				<Grid Background="#33FF0000">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200" />
+						<ColumnDefinition Width="50" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
 
-								<Grid.RowDefinitions>
-									<RowDefinition />
-									<RowDefinition />
-									<RowDefinition />
-									<RowDefinition />
-								</Grid.RowDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
 
-								<TextBlock Grid.Row="0" Grid.Column="0" Text="Origin" />
-								<TextBox Grid.Row="0" Grid.Column="1" Text="0,0" x:Name="RedOrigin" HorizontalAlignment="Stretch" />
+					<TextBlock Grid.Row="0" Grid.Column="0" Text="Origin" />
+					<TextBox Grid.Row="0" Grid.Column="1" Text="0,0" x:Name="RedOrigin" HorizontalAlignment="Stretch" />
 
-								<Slider Grid.Row="1" Grid.Column="0" Header="Center X" x:Name="RedCenterX" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
-								<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ElementName=RedCenterX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+					<Slider Grid.Row="1" Grid.Column="0" Header="Center X" x:Name="RedCenterX" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ElementName=RedCenterX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
 
-								<Slider Grid.Row="2" Grid.Column="0" Header="Center Y" x:Name="RedCenterY" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
-								<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ElementName=RedCenterY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+					<Slider Grid.Row="2" Grid.Column="0" Header="Center Y" x:Name="RedCenterY" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ElementName=RedCenterY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
 
-								<Slider Grid.Row="3" Grid.Column="0" Header="Angle" x:Name="RedAngle" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
-								<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ElementName=RedAngle, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+					<Slider Grid.Row="3" Grid.Column="0" Header="Angle" x:Name="RedAngle" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ElementName=RedAngle, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
 
-								<Border Grid.RowSpan="4" Grid.Column="2" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-									<Rectangle Fill="#FF0000" Width="100" Height="100" RenderTransformOrigin="{Binding ElementName=RedOrigin, Path=Text}">
-										<Rectangle.RenderTransform>
-											<RotateTransform
-												CenterX="{Binding ElementName=RedCenterX, Path=Value}"
-												CenterY="{Binding ElementName=RedCenterY, Path=Value}"
-												Angle="{Binding ElementName=RedAngle, Path=Value}" />
-										</Rectangle.RenderTransform>
-									</Rectangle>
-								</Border>
-							</Grid>
+					<Border Grid.RowSpan="4" Grid.Column="2" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<Rectangle Fill="#FF0000" Width="100" Height="100" RenderTransformOrigin="{Binding ElementName=RedOrigin, Path=Text}">
+							<Rectangle.RenderTransform>
+								<RotateTransform
+									CenterX="{Binding ElementName=RedCenterX, Path=Value}"
+									CenterY="{Binding ElementName=RedCenterY, Path=Value}"
+									Angle="{Binding ElementName=RedAngle, Path=Value}" />
+							</Rectangle.RenderTransform>
+						</Rectangle>
+					</Border>
+				</Grid>
+
+				<Grid Background="#33FF8000">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200" />
+						<ColumnDefinition Width="50" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Row="0" Grid.Column="0" Text="Origin" />
+					<TextBox Grid.Row="0" Grid.Column="1" Text="0,0" x:Name="OrangeOrigin" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="1" Grid.Column="0" Header="Translate X" x:Name="OrangeTranslateX" Minimum="-150" Maximum="150" Value="15" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ElementName=OrangeTranslateX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="2" Grid.Column="0" Header="Translate Y" x:Name="OrangeTranslateY" Minimum="-150" Maximum="150" Value="15" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ElementName=OrangeTranslateY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Border Grid.RowSpan="3" Grid.Column="2" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<Rectangle Fill="#FF8000" Width="100" Height="100" RenderTransformOrigin="{Binding ElementName=OrangeOrigin, Path=Text}">
+							<Rectangle.RenderTransform>
+								<TranslateTransform
+									X="{Binding ElementName=OrangeTranslateX, Path=Value}"
+									Y="{Binding ElementName=OrangeTranslateY, Path=Value}" />
+							</Rectangle.RenderTransform>
+						</Rectangle>
+					</Border>
+				</Grid>
+
+				<Grid Background="#33FFFF00">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200" />
+						<ColumnDefinition Width="50" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Row="0" Grid.Column="0" Text="Origin" />
+					<TextBox Grid.Row="0" Grid.Column="1" Text="0,0" x:Name="YellowOrigin" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="1" Grid.Column="0" Header="Center X" x:Name="YellowCenterX" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ElementName=YellowCenterX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="2" Grid.Column="0" Header="Center Y" x:Name="YellowCenterY" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ElementName=YellowCenterY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="3" Grid.Column="0" Header="Angle X" x:Name="YellowAngleX" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ElementName=YellowAngleX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="4" Grid.Column="0" Header="Angle Y" x:Name="YellowAngleY" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ElementName=YellowAngleY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Border Grid.RowSpan="5" Grid.Column="2" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<Rectangle Fill="#FFFF00" Width="100" Height="100" RenderTransformOrigin="{Binding ElementName=YellowOrigin, Path=Text}">
+							<Rectangle.RenderTransform>
+								<SkewTransform
+									CenterX="{Binding ElementName=YellowCenterX, Path=Value}"
+									CenterY="{Binding ElementName=YellowCenterY, Path=Value}"
+									AngleX="{Binding ElementName=YellowAngleX, Path=Value}"
+									AngleY="{Binding ElementName=YellowAngleY, Path=Value}" />
+							</Rectangle.RenderTransform>
+						</Rectangle>
+					</Border>
+				</Grid>
+
+				<Grid Background="#33008000">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200" />
+						<ColumnDefinition Width="50" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Row="0" Grid.Column="0" Text="Origin" />
+					<TextBox Grid.Row="0" Grid.Column="1" Text="0,0" x:Name="GreenOrigin" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="1" Grid.Column="0" Header="Center X" x:Name="GreenCenterX" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ElementName=GreenCenterX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="2" Grid.Column="0" Header="Center Y" x:Name="GreenCenterY" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ElementName=GreenCenterY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="3" Grid.Column="0" Header="Scale X" x:Name="GreenScaleX" Minimum="-2" Maximum="2" Value=".8" StepFrequency=".1" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ElementName=GreenScaleX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="4" Grid.Column="0" Header="Scale Y" x:Name="GreenScaleY" Minimum="-2" Maximum="2" Value=".8" StepFrequency=".1" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ElementName=GreenScaleY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Border Grid.RowSpan="5" Grid.Column="2" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<Rectangle Fill="#008000" Width="100" Height="100" RenderTransformOrigin="{Binding ElementName=GreenOrigin, Path=Text}">
+							<Rectangle.RenderTransform>
+								<ScaleTransform
+									CenterX="{Binding ElementName=GreenCenterX, Path=Value}"
+									CenterY="{Binding ElementName=GreenCenterY, Path=Value}"
+									ScaleX="{Binding ElementName=GreenScaleX, Path=Value}"
+									ScaleY="{Binding ElementName=GreenScaleY, Path=Value}" />
+							</Rectangle.RenderTransform>
+						</Rectangle>
+					</Border>
+				</Grid>
+
+				<Grid Background="#330000FF">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200" />
+						<ColumnDefinition Width="50" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Row="0" Grid.Column="0" Text="Origin" />
+					<TextBox Grid.Row="0" Grid.Column="1" Text="0,0" x:Name="BlueOrigin" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="1" Grid.Column="0" Header="Center X" x:Name="BlueCenterX" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ElementName=BlueCenterX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="2" Grid.Column="0" Header="Center Y" x:Name="BlueCenterY" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ElementName=BlueCenterY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="3" Grid.Column="0" Header="Scale X" x:Name="BlueScaleX" Minimum="-2" Maximum="2" Value=".8" StepFrequency=".1" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ElementName=BlueScaleX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="4" Grid.Column="0" Header="Scale Y" x:Name="BlueScaleY" Minimum="-2" Maximum="2" Value=".8" StepFrequency=".1" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ElementName=BlueScaleY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="5" Grid.Column="0" Header="Skew X" x:Name="BlueSkewX" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding ElementName=BlueSkewX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="6" Grid.Column="0" Header="Skew Y" x:Name="BlueSkewY" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding ElementName=BlueSkewY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="7" Grid.Column="0" Header="Translate X" x:Name="BlueTranslateX" Minimum="-150" Maximum="150" Value="15" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="7" Grid.Column="1" Text="{Binding ElementName=BlueTranslateX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="8" Grid.Column="0" Header="Translate Y" x:Name="BlueTranslateY" Minimum="-150" Maximum="150" Value="15" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="8" Grid.Column="1" Text="{Binding ElementName=BlueTranslateY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="9" Grid.Column="0" Header="Rotation" x:Name="BlueRotation" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="9" Grid.Column="1" Text="{Binding ElementName=BlueRotation, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Border Grid.RowSpan="10" Grid.Column="2" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<Rectangle Fill="#0000FF" Width="100" Height="100" RenderTransformOrigin="{Binding ElementName=BlueOrigin, Path=Text}">
+							<Rectangle.RenderTransform>
+								<CompositeTransform
+									CenterX="{Binding ElementName=BlueCenterX, Path=Value}"
+									CenterY="{Binding ElementName=BlueCenterY, Path=Value}"
+									ScaleX="{Binding ElementName=BlueScaleX, Path=Value}"
+									ScaleY="{Binding ElementName=BlueScaleY, Path=Value}"
+									SkewX="{Binding ElementName=BlueSkewX, Path=Value}"
+									SkewY="{Binding ElementName=BlueSkewY, Path=Value}"
+									TranslateX="{Binding ElementName=BlueTranslateX, Path=Value}"
+									TranslateY="{Binding ElementName=BlueTranslateY, Path=Value}"
+									Rotation="{Binding ElementName=BlueRotation, Path=Value}" />
+							</Rectangle.RenderTransform>
+						</Rectangle>
+					</Border>
+				</Grid>
+
+				<Grid Background="#33A000C0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="200" />
+						<ColumnDefinition Width="50" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+						<RowDefinition />
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Row="0" Grid.Column="0" Text="Origin" />
+					<TextBox Grid.Row="0" Grid.Column="1" Text="0,0" x:Name="PurpleOrigin" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="1" Grid.Column="0" Header="Center X" x:Name="PurpleCenterX" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ElementName=PurpleCenterX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="2" Grid.Column="0" Header="Center Y" x:Name="PurpleCenterY" Minimum="-150" Maximum="150" Value="50" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ElementName=PurpleCenterY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="3" Grid.Column="0" Header="Scale X" x:Name="PurpleScaleX" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ElementName=PurpleScaleX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="4" Grid.Column="0" Header="Scale Y" x:Name="PurpleScaleY" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ElementName=PurpleScaleY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="5" Grid.Column="0" Header="Skew X" x:Name="PurpleSkewX" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding ElementName=PurpleSkewX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="6" Grid.Column="0" Header="Skew Y" x:Name="PurpleSkewY" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="6" Grid.Column="1" Text="{Binding ElementName=PurpleSkewY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="7" Grid.Column="0" Header="Translate X" x:Name="PurpleTranslateX" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="7" Grid.Column="1" Text="{Binding ElementName=PurpleTranslateX, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="8" Grid.Column="0" Header="Translate Y" x:Name="PurpleTranslateY" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="8" Grid.Column="1" Text="{Binding ElementName=PurpleTranslateY, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Slider Grid.Row="9" Grid.Column="0" Header="Rotation" x:Name="PurpleRotation" Minimum="0" Maximum="360" Value="30" HorizontalAlignment="Stretch" />
+					<TextBox Grid.Row="9" Grid.Column="1" Text="{Binding ElementName=PurpleRotation, Path=Value, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+
+					<Border Grid.RowSpan="10" Grid.Column="2" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<Rectangle Fill="#A000C0" Width="100" Height="100" RenderTransformOrigin="{Binding ElementName=PurpleOrigin, Path=Text}">
+							<Rectangle.RenderTransform>
+								<TransformGroup>
+									<ScaleTransform
+										CenterX="{Binding ElementName=PurpleCenterX, Path=Value}"
+										CenterY="{Binding ElementName=PurpleCenterY, Path=Value}" />
+									<SkewTransform />
+									<RotateTransform />
+									<TranslateTransform />
+								</TransformGroup>
+								
+							</Rectangle.RenderTransform>
+						</Rectangle>
+					</Border>
+				</Grid>
 
 
-							<!--<Rectangle Fill="#FF8000" Width="100" Height="100" >
+
+				<!--<Rectangle Fill="#FF8000" Width="100" Height="100" >
 								<Rectangle.RenderTransform>
 									<TranslateTransform x:Name="OrangeTranslate">
 										--><!--<behaviors:DynamicAnimation.Storyboard>

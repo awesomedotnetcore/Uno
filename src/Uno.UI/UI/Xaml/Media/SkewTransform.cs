@@ -15,7 +15,7 @@ namespace Windows.UI.Xaml.Media
 	{
 		internal static Matrix3x2 GetMatrix(double centerX, double centerY, double angleXDegree, double angleYDegree)
 		{
-			var angleX = (float)MathEx.ToRadians(angleXDegree);
+			var angleX = (float) MathEx.ToRadians(angleXDegree);
 			var angleY = (float) MathEx.ToRadians(angleYDegree);
 			var centerPoint = new Vector2((float)centerX, (float)centerY);
 

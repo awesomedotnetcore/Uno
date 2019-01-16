@@ -70,11 +70,11 @@ namespace Windows.UI.Xaml.Media
 		//	return targetMatrix;
 		//}
 
-		protected override void ApplyTo(View view, Point absoluteOrigin)
-		{
-			view.PivotX = (float)ViewHelper.LogicalToPhysicalPixels(absoluteOrigin.X + CenterX);
-			view.PivotY = (float)ViewHelper.LogicalToPhysicalPixels(absoluteOrigin.Y + CenterY);
-			view.Rotation = (float)Angle;
-		}
+		//protected override void ApplyTo(View view, Point absoluteOrigin)
+		//{
+		//	view.PivotX = (float)ViewHelper.LogicalToPhysicalPixels(absoluteOrigin.X + CenterX);
+		//	view.PivotY = (float)ViewHelper.LogicalToPhysicalPixels(absoluteOrigin.Y + CenterY);
+		//	view.Rotation = (float)Angle;
+		//}
 	}
 }

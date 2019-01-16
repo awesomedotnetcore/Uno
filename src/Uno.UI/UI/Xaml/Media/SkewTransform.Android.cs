@@ -63,13 +63,13 @@ namespace Windows.UI.Xaml.Media
 		//	return targetMatrix;
 		//}
 
-		protected override void ApplyTo(View view, Point absoluteOrigin)
-		{
-			view.PivotX = (float)ViewHelper.LogicalToPhysicalPixels(absoluteOrigin.X + CenterX);
-			view.PivotY = (float)ViewHelper.LogicalToPhysicalPixels(absoluteOrigin.Y + CenterY);
-			view.RotationX = (float)AngleX;
-			view.RotationY = (float)AngleY;
-		}
+		//protected override void ApplyTo(View view, Point absoluteOrigin)
+		//{
+		//	view.PivotX = (float)ViewHelper.LogicalToPhysicalPixels(absoluteOrigin.X + CenterX);
+		//	view.PivotY = (float)ViewHelper.LogicalToPhysicalPixels(absoluteOrigin.Y + CenterY);
+		//	view.RotationX = (float)AngleX;
+		//	view.RotationY = (float)AngleY;
+		//}
 	}
 }
 

@@ -101,17 +101,17 @@ namespace Windows.UI.Xaml.Media
 		//	return skew;
 		//}
 
-		protected override void ApplyTo(UIView view, Point absoluteOrigin)
-		{
-			view.SetViewCenter((nfloat)CenterX, (nfloat)CenterY);
+		//protected override void ApplyTo(UIView view, Point absoluteOrigin)
+		//{
+		//	view.SetViewCenter((nfloat)CenterX, (nfloat)CenterY);
 
-			var skew = CGAffineTransform.MakeIdentity();
+		//	var skew = CGAffineTransform.MakeIdentity();
 
-			skew.yx = (float)Math.Tan(MathEx.ToRadians(AngleY));
-			skew.xy = (float)Math.Tan(MathEx.ToRadians(AngleX));
+		//	skew.yx = (float)Math.Tan(MathEx.ToRadians(AngleY));
+		//	skew.xy = (float)Math.Tan(MathEx.ToRadians(AngleX));
 
-			view.Transform = skew;
-		}
+		//	view.Transform = skew;
+		//}
 	}
 }
 

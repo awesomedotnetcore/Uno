@@ -50,7 +50,7 @@ namespace Windows.UI.Xaml.Media
 		internal override Matrix3x2 ToMatrix(Point absoluteOrigin)
 		{
 			// Creates native transform which applies multiple transformations in this order:
-			// Scale(ScaleX, ScaleY )
+			// Scale(ScaleX, ScaleY)
 			// Skew(SkewX, SkewY)
 			// Rotate(Rotation)
 			// Translate(TranslateX, TranslateY)
@@ -62,8 +62,8 @@ namespace Windows.UI.Xaml.Media
 			var matrix = Matrix3x2.Identity;
 
 			matrix *= ScaleTransform.GetMatrix(centerX, centerY, ScaleX, ScaleY);
-			matrix *= SkewTransform.GetMatrix(centerX, centerY, SkewX, SkewY);
-			matrix *= RotateTransform.GetMatrix(centerX, centerY, Rotation);
+			matrix *= SkewTransform.GetMatrix(CenterX, CenterY, SkewX, SkewY);
+			matrix *= RotateTransform.GetMatrix(CenterX, CenterY, Rotation);
 			matrix *= TranslateTransform.GetMatrix(TranslateX, TranslateY);
 
 			return matrix;

@@ -79,24 +79,24 @@ namespace Windows.UI.Xaml.Media
 		//	SetNeedsUpdate();
 		//}
 
-		protected override void ApplyTo(UIView view, Point absoluteOrigin)
-		{
-			var pivotX = absoluteOrigin.X + CenterX;
-			var pivotY = absoluteOrigin.Y + CenterY;
+		//protected override void ApplyTo(UIView view, Point absoluteOrigin)
+		//{
+		//	var pivotX = absoluteOrigin.X + CenterX;
+		//	var pivotY = absoluteOrigin.Y + CenterY;
 
-			var transform = CGAffineTransform.MakeIdentity();
+		//	var transform = CGAffineTransform.MakeIdentity();
 
-			//Perform transformations about centre
-			transform = CGAffineTransform.Translate(transform, (nfloat)pivotX, (nfloat)pivotY);
+		//	//Perform transformations about centre
+		//	transform = CGAffineTransform.Translate(transform, (nfloat)pivotX, (nfloat)pivotY);
 
-			//Apply transformations in order
-			transform = CGAffineTransform.Scale(transform, (nfloat)ScaleX, (nfloat)ScaleY);
+		//	//Apply transformations in order
+		//	transform = CGAffineTransform.Scale(transform, (nfloat)ScaleX, (nfloat)ScaleY);
 
-			//Unapply centering
-			transform = CGAffineTransform.Translate(transform, -(nfloat)pivotX, -(nfloat)pivotY);
+		//	//Unapply centering
+		//	transform = CGAffineTransform.Translate(transform, -(nfloat)pivotX, -(nfloat)pivotY);
 
-			view.Transform = transform;
-		}
+		//	view.Transform = transform;
+		//}
 	}
 }
 
